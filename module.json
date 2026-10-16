@@ -1,0 +1,50 @@
+{
+  "id": "silent-failure-catalog",
+  "stage": "V",
+  "stage_name": "验证侧（Verifier-side）",
+  "title": "Silent Failure Catalog · 静默失败目录（验证通过但实际未检查）",
+  "description": "对『验证通过但实际未检查』的系统性目录：CI 门禁、测试套件、数据管线与 AI 智能体 harness 中的静默通过模式，含检测配方（detection recipes）。ITU FG-TIDA 验证侧挑战参考（use-cases#23）；代码 MIT、内容保留所有权利（注明出处可引用）。",
+  "triggers": {
+    "keywords": [
+      "silent-failure",
+      "false-green",
+      "verification-gap",
+      "ci-cd",
+      "testing",
+      "ai-agents",
+      "observability",
+      "data-quality",
+      "静默失败",
+      "假绿",
+      "验证缺口"
+    ],
+    "file_patterns": [
+      "check-catalog.py",
+      "make-manifest.py",
+      "failures/"
+    ],
+    "intents": [
+      "静默失败",
+      "验证通过但未检查",
+      "门禁失效"
+    ]
+  },
+  "provides": [
+    "silent-failure-catalog",
+    "sfc",
+    "verification-gap",
+    "false-green"
+  ],
+  "skills": [],
+  "needs_backends": [],
+  "license": "MIT (code) / All Rights Reserved (content)",
+  "upstream": "zhaoxinghua09-cell/silent-failure-catalog (fork working copy)",
+  "cost": "low",
+  "lazy": true,
+  "nested": true,
+  "entry": "tools/check-catalog.py",
+  "deps": [],
+  "generated_by": "lgd-skeleton/1.0 (working-copy contract)",
+  "idea": "静默失败模式目录：验证通过而实际未检查的系统性形状与检测配方",
+  "extension_note": "新增条目：在 failures/ 下按条目模板添加 markdown，并运行 tools/check-catalog.py --selftest 复核。"
+}
