@@ -3,7 +3,7 @@
   "stage": "V",
   "stage_name": "验证侧（Verifier-side）",
   "title": "Silent Failure Catalog · 静默失败目录（验证通过但实际未检查）",
-  "description": "对『验证通过但实际未检查』的系统性目录：CI 门禁、测试套件、数据管线与 AI 智能体 harness 中的静默通过模式，含检测配方（detection recipes）。ITU FG-TIDA 验证侧挑战参考（use-cases#23）；代码 MIT、内容保留所有权利（注明出处可引用）。",
+  "description": "A systematic catalog of 'validated but never actually checked' failures: CI gates, test suites, data pipelines and AI-agent harnesses.",
   "triggers": {
     "keywords": [
       "silent-failure",
