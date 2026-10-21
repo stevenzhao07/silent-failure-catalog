@@ -6,64 +6,49 @@
 
 *Silent failure modes in CI gates, test suites, data pipelines and AI-agent harnesses — with detection recipes.*
 
+14 named failure modes. Most carry a reproduction you can run in under 10 lines, the concrete change that turns the silent pass into a loud failure, and a **negative control** proving the check is capable of failing. Plus a stdlib-only linter that scans your own gates for the same shapes.
+
+**[Start here — find the entry that matches your symptom](docs/start-here.md)** · [The 14 entries](failures/) · [Take the challenge](docs/take-the-challenge.md)
+
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
-[![Content: All Rights Reserved](https://img.shields.io/badge/content-All%20Rights%20Reserved-lightgrey.svg)](LICENSE-CONTENT)
 [![Entries](https://img.shields.io/badge/entries-14-14B8A6)](failures/)
-[![Zero dependency](https://img.shields.io/badge/deps-stdlib%20only-0B1F3A)](#quick-start)
-<!-- The gate runs in CI now, so the badge below can point at a run that exists.
-     It was withheld until it did: a badge claiming a validation run that does not
-     exist would be exactly the silent pass this repo documents. The second badge
-     still points at the check you can run yourself, right now, locally. -->
-[![gates](https://github.com/zhaoxinghua09-cell/silent-failure-catalog/actions/workflows/gates.yml/badge.svg)](https://github.com/zhaoxinghua09-cell/silent-failure-catalog/actions/workflows/gates.yml)
-[![Catalog validation](https://img.shields.io/badge/validation-check--catalog%20--selftest-0B1F3A)](tools/check-catalog.py)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23260442.svg)](https://doi.org/10.5281/zenodo.23260442)
 
-[Start here](docs/start-here.md) · [Taxonomy](docs/taxonomy.md) · [Question Map](docs/question-map.md) · [Catalog index](failures/) · [Take the challenge](docs/take-the-challenge.md) · [Contributing](CONTRIBUTING.md)
-
 `silent-failure` `false-green` `verification-gap` `ci-cd` `testing` `ai-agents` `observability` `data-quality`
-
-<details>
-<summary><b>📜 许可说明 · License Notice</b> — 分层许可：代码 MIT · 内容保留所有权利（引用需注明出处；点击展开完整条款）</summary>
-
-### 许可说明 · License Notice
-
-> **本仓库使用自定义的「分层」许可：代码 MIT、内容保留所有权利**——不是整仓 MIT 或
-> Apache-2.0。平台显示为 `Other`（NOASSERTION），属识别算法的正常结果，
-> **不代表本仓库处于无许可状态**。
-
-- **权利状态**：全部内容保留所有权利（All Rights Reserved）。未经书面许可，
-  不得复制、改编、再分发、公开传播或用于衍生作品。
-- **可否引用**：可以。允许在**注明出处**的前提下引用与学术、公共讨论；
-  引用时请同时标注仓库名、原文链接 `https://github.com/zhaoxinghua09-cell/silent-failure-catalog`
-  与权利人「赵兴华 / Steven Zhao·China」。
-- **完整条款**：代码见 [LICENSE](LICENSE)（MIT）；内容见 [LICENSE-CONTENT](LICENSE-CONTENT)（**保留所有权利**，注明出处可引用）。
-- **联系**：zhaoxinghua09@gmail.com ｜ ORCID 0009-0001-0512-1237 <!-- leak-scan: allow — the maintainer's published contact address; deliberate, not a leak -->
-- **品牌状态限定**：MedXpert、SynomosAI、LGD 等为相关项目标识，
-  **均未申请实体注册、未申请商标注册**；出现仅作来源标识，
-  不构成对法人实体或商标权的任何主张。
-- **免责**：本仓库内容不构成法规意见或注册代理服务；关键数据以监管机构最新发布为准。
-
-</details>
 
 </div>
 
 ---
 
-> **Submitted to ITU FG-TIDA.** This catalog is the verifier-side challenge reference discussed in themes **#6** (*Verifier-side requirements and failure semantics*) and **#7**, submitted as **`FG-TIDA/use-cases#23`** and cited in those threads as the executable form of "a check that ran and could not fail" (SF-011) and the `checks-in-path` field (C7). **Canonical citation: the immutable release tag `v0.1.3`** — check it out and run `python tools/make-manifest.py --check` to confirm you hold the exact bytes; the integrity manifest recorded in `INTEGRITY.md` is authoritative. [`v0.1.0` is superseded and must not be cited: the commit that added the release-consistency gate did not regenerate `manifest.sha256`, so on that tag the check this sentence invites reports a mismatch — see `CHANGELOG.md`, 0.1.1. The `failures/` and `docs/` content is unchanged across all four, so every entry id and `as of` date still resolves. `v0.1.1` is superseded in turn, and for a sharper reason: its tree carries the Zenodo deposit workflow that hard-coded `version: 0.1.0` and created a *new* deposition rather than a new version, so a Release published for that tag would have archived an artefact claiming 0.1.0 under a second concept DOI — see `CHANGELOG.md`, 0.1.2. `v0.1.2` is superseded in turn: it predates the clinical-delegation example below — see `CHANGELOG.md`, 0.1.3. Earlier commits `e977a04a` and `82018d3c` are superseded as well: `82018d3c` carried a withdrawn CC BY 4.0 / SynomosAI line — see `LICENSE-CONTENT`.] The full clickable trail is on the profile README (`zhaoxinghua09-cell`). Archived at Zenodo with DOI **10.5281/zenodo.23260442** (version 0.1.2, 2026-10-09; concept DOI **10.5281/zenodo.23051637**). The superseded 0.1.0 archive stays online under the same concept DOI and must not be cited; `INTEGRITY.md` carries the same line.
->
-> **Runnable example.** The T08 walkthrough (UC-21 S5-Q2 via the SF-006 control) now runs as a stateful simulation with a selftest that asserts the two traces discriminate: [`examples/T08-S5Q2/`](examples/T08-S5Q2/README.md).
->
-> **Gate-register crosswalk.** The UC-21 scenario's own Q0-Q6 register (Annex S5 sections 7-10) now runs as an executable crosswalk to that four-case matrix, reproducing the published capability-absent and ineffective-control traces and killing four gate-layer mutants: [`examples/S5-Qregister/`](examples/S5-Qregister/README.md).
->
-> **Clinical-delegation transfer proof.** The same fail-closed authority-preservation gate, ported to a high-stakes clinical-delegation context where authority is laundered across a context handoff; a selftest asserts four mutant-kills and a negative-control: [`examples/clinical-handoff/`](examples/clinical-handoff/README.md). *(Included in the immutable release tag `v0.1.3`.)*
+## 30 seconds
+
+A test that always passes is worse than no test. It looks like coverage and provides none — and nothing in the output says so.
+
+This catalog names the fourteen shapes this takes (SF-001 … SF-014), gives each one a runnable reproduction, and pairs every claimed fix with a **negative control**: a deliberately broken input the check *must* reject. If the check cannot fail, there is no evidence it works.
+
+If you only read one entry, read [SF-001 — zero items pass](failures/SF-001-zero-items-pass.md). It is the most common of the fourteen and the easiest to spot in your own code.
+
+It runs with nothing installed. Point it at the five deliberately broken gates shipped in this repository:
+
+```bash
+git clone https://github.com/zhaoxinghua09-cell/silent-failure-catalog.git
+cd silent-failure-catalog
+python tools/gate-lint.py tools/samples/bad --tree .
+```
+
+You should see `8 finding(s): 4 high, 2 medium, 2 low.` If you do not, this page is wrong about something — [open an issue](https://github.com/zhaoxinghua09-cell/silent-failure-catalog/issues).
+
+**License:** code MIT · content All Rights Reserved — quotation with attribution is allowed; copying or adapting the content is not. [Full terms](#license).
+
+**Provenance:** submitted to ITU FG-TIDA as `FG-TIDA/use-cases#23`; archived at Zenodo, DOI [10.5281/zenodo.23260442](https://doi.org/10.5281/zenodo.23260442). Canonical citation is the release tag `v0.1.3` — three earlier tags are superseded, [each for a recorded reason](#provenance).
 
 ---
 
-> **If this saved you a debugging session, open an issue naming the pattern you hit.** That is what decides which failure mode gets written next — a star does not, and we do not trade, buy or reward them. If you would rather attack the tooling itself, [start here](docs/take-the-challenge.md).
+> **If this saved you a debugging session, open an issue naming the pattern you hit.** That is what decides which failure mode gets written next — we do not trade, buy or reward stars. But a star is not nothing: it is how the next person who hits the same shape finds this page. Both are welcome; the issue is worth more. If you would rather attack the tooling itself, [start here](docs/take-the-challenge.md).
 >
 > If you found this through one of our other projects, [`docs/start-here.md`](docs/start-here.md) maps a symptom to the entry that answers it, and [`docs/where-to-find-us.md`](docs/where-to-find-us.md) is the one page that carries all of our channels.
 >
-> The tooling here found **eleven defects in itself** while being built — and every one is now a closed entry in [`docs/defect-ledger.json`](docs/defect-ledger.json), with the narrative record in [`docs/building-this-catalog.md`](docs/building-this-catalog.md). The count is stated there and not repeated here, on purpose: a catalog about silent passes that was itself silently passing would be worth nothing.
+> The tooling here found **eleven defects in itself** while being built — D-001 through D-011 in [`docs/defect-ledger.json`](docs/defect-ledger.json), with the narrative record in [`docs/building-this-catalog.md`](docs/building-this-catalog.md). The ledger has grown since it was written; it is the only source of truth for the total, and this page deliberately does not carry a second one. A catalog about silent passes that was itself silently passing would be worth nothing.
 
 ---
 
@@ -251,6 +236,45 @@ These are the only outbound and entry links in this README, by policy — the ru
 
 ---
 
+## Provenance
+
+This repository mirrors [`zhaoxinghua09-cell/silent-failure-catalog`](https://github.com/zhaoxinghua09-cell/silent-failure-catalog). Canonical history, issues and citation point upstream. The reading order on this page has been rearranged; the record below is upstream's, unchanged.
+
+> **Submitted to ITU FG-TIDA.** This catalog is the verifier-side challenge reference discussed in themes **#6** (*Verifier-side requirements and failure semantics*) and **#7**, submitted as **`FG-TIDA/use-cases#23`** and cited in those threads as the executable form of "a check that ran and could not fail" (SF-011) and the `checks-in-path` field (C7). **Canonical citation: the immutable release tag `v0.1.3`** — check it out and run `python tools/make-manifest.py --check` to confirm you hold the exact bytes; the integrity manifest recorded in `INTEGRITY.md` is authoritative. [`v0.1.0` is superseded and must not be cited: the commit that added the release-consistency gate did not regenerate `manifest.sha256`, so on that tag the check this sentence invites reports a mismatch — see `CHANGELOG.md`, 0.1.1. The `failures/` and `docs/` content is unchanged across all four, so every entry id and `as of` date still resolves. `v0.1.1` is superseded in turn, and for a sharper reason: its tree carries the Zenodo deposit workflow that hard-coded `version: 0.1.0` and created a *new* deposition rather than a new version, so a Release published for that tag would have archived an artefact claiming 0.1.0 under a second concept DOI — see `CHANGELOG.md`, 0.1.2. `v0.1.2` is superseded in turn: it predates the clinical-delegation example below — see `CHANGELOG.md`, 0.1.3. Earlier commits `e977a04a` and `82018d3c` are superseded as well: `82018d3c` carried a withdrawn CC BY 4.0 / SynomosAI line — see `LICENSE-CONTENT`.] The full clickable trail is on the profile README (`zhaoxinghua09-cell`). Archived at Zenodo with DOI **10.5281/zenodo.23260442** (version 0.1.2, 2026-10-09; concept DOI **10.5281/zenodo.23051637**). The superseded 0.1.0 archive stays online under the same concept DOI and must not be cited; `INTEGRITY.md` carries the same line.
+>
+> **Runnable example.** The T08 walkthrough (UC-21 S5-Q2 via the SF-006 control) now runs as a stateful simulation with a selftest that asserts the two traces discriminate: [`examples/T08-S5Q2/`](examples/T08-S5Q2/README.md).
+>
+> **Gate-register crosswalk.** The UC-21 scenario's own Q0-Q6 register (Annex S5 sections 7-10) now runs as an executable crosswalk to that four-case matrix, reproducing the published capability-absent and ineffective-control traces and killing four gate-layer mutants: [`examples/S5-Qregister/`](examples/S5-Qregister/README.md).
+>
+> **Clinical-delegation transfer proof.** The same fail-closed authority-preservation gate, ported to a high-stakes clinical-delegation context where authority is laundered across a context handoff; a selftest asserts four mutant-kills and a negative-control: [`examples/clinical-handoff/`](examples/clinical-handoff/README.md). *(Included in the immutable release tag `v0.1.3`.)*
+
+## License
+
+<details>
+<summary><b>📜 许可说明 · License Notice</b> — 分层许可：代码 MIT · 内容保留所有权利（引用需注明出处；点击展开完整条款）</summary>
+
+### 许可说明 · License Notice
+
+> **本仓库使用自定义的「分层」许可：代码 MIT、内容保留所有权利**——不是整仓 MIT 或
+> Apache-2.0。平台显示为 `Other`（NOASSERTION），属识别算法的正常结果，
+> **不代表本仓库处于无许可状态**。
+
+- **权利状态**：全部内容保留所有权利（All Rights Reserved）。未经书面许可，
+  不得复制、改编、再分发、公开传播或用于衍生作品。
+- **可否引用**：可以。允许在**注明出处**的前提下引用与学术、公共讨论；
+  引用时请同时标注仓库名、原文链接 `https://github.com/zhaoxinghua09-cell/silent-failure-catalog`
+  与权利人「赵兴华 / Steven Zhao·China」。
+- **完整条款**：代码见 [LICENSE](LICENSE)（MIT）；内容见 [LICENSE-CONTENT](LICENSE-CONTENT)（**保留所有权利**，注明出处可引用）。
+- **联系**：zhaoxinghua09@gmail.com ｜ ORCID 0009-0001-0512-1237 <!-- leak-scan: allow — the maintainer's published contact address; deliberate, not a leak -->
+- **品牌状态限定**：MedXpert、SynomosAI、LGD 等为相关项目标识，
+  **均未申请实体注册、未申请商标注册**；出现仅作来源标识，
+  不构成对法人实体或商标权的任何主张。
+- **免责**：本仓库内容不构成法规意见或注册代理服务；关键数据以监管机构最新发布为准。
+
+</details>
+
+---
+
 ## 中文说明
 
 **静默失败 = 系统看着一切正常，其实该发生的没发生。**
@@ -274,7 +298,7 @@ These are the only outbound and entry links in this README, by policy — the ru
 - [`docs/take-the-challenge.md`](docs/take-the-challenge.md) —— **来拆我们的台**：三档难度，攻破我们自己的检测器，攻破即署名。
 - [`docs/where-to-find-us.md`](docs/where-to-find-us.md) —— **全部渠道与引用口径**（本仓唯一集中放外链的地方）。
 
-**怎么贡献最有用**：不要点赞，**开一个 issue 说出你撞见的那类静默失败**——它决定下一条写什么。
+**怎么贡献最有用**：**开一个 issue 说出你撞见的那类静默失败**——它决定下一条写什么。点赞不必，但也欢迎：能让下一个撞见同一种形状的人搜到这里。
 
 许可：代码 MIT ｜ 内容保留所有权利（注明出处可引用）
 
