@@ -314,3 +314,5 @@ This repository mirrors [`zhaoxinghua09-cell/silent-failure-catalog`](https://gi
 </div>
 
 <!-- drift probe -->
+
+<!-- lgd gate probe: this commit must be refused by the gate -->
