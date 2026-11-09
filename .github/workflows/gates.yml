@@ -68,7 +68,12 @@ concurrency:
 jobs:
   gates:
     name: gates · python ${{ matrix.python }}
-    runs-on: ubuntu-latest
+    # Pinned: `ubuntu-latest` moved to Ubuntu 26.04 on 2026-10-19, and setup-python
+    # has no 3.9 build there, so the 3.9 leg of this matrix went red on every push
+    # while the repository's own floor claim ("Python 3.9+") stayed in the README.
+    # Pin to the image that still carries 3.9 instead of dropping the floor claim.
+    # Re-check when the floor rises: this pin is what keeps the claim testable.
+    runs-on: ubuntu-24.04
     # `gh` is preinstalled on the runner but unauthenticated unless a token is handed
     # to it. Gate 6 resolves the tag object through the API, so this token is part of
     # whether the gate can run at all (defect 3 above).
