@@ -28,15 +28,16 @@ This catalog names the fourteen shapes this takes (SF-001 … SF-014), gives eac
 
 If you only read one entry, read [SF-001 — zero items pass](failures/SF-001-zero-items-pass.md). It is the most common of the fourteen and the easiest to spot in your own code.
 
-It runs with nothing installed. Point it at the five deliberately broken gates shipped in this repository:
+It runs with nothing installed. The five deliberately broken gates ship as `samples/` fixtures, and the linter **skips `samples/` on purpose** — hand it `tools/samples/bad` and it answers `FAIL — nothing was linted, so nothing is verified.` (that is the guard working, not a broken command). Run the selftest, then point it at your own gate:
 
 ```bash
 git clone https://github.com/zhaoxinghua09-cell/silent-failure-catalog.git
 cd silent-failure-catalog
-python tools/gate-lint.py tools/samples/bad --tree .
+python tools/gate-lint.py --selftest        # every rule fires on its bad sample, stays quiet on the good one
+python tools/gate-lint.py path/to/your_gate.py
 ```
 
-You should see `8 finding(s): 4 high, 2 medium, 2 low.` If you do not, this page is wrong about something — [open an issue](https://github.com/zhaoxinghua09-cell/silent-failure-catalog/issues).
+You should see `SELFTEST PASSED: every rule fires on its bad sample and stays quiet on the good sample.` If you do not, this page is wrong about something — [open an issue](https://github.com/zhaoxinghua09-cell/silent-failure-catalog/issues).
 
 **License:** code MIT · content All Rights Reserved — quotation with attribution is allowed; copying or adapting the content is not. [Full terms](#license).
 
